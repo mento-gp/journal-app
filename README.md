@@ -1,6 +1,6 @@
 # 📝 Journal App
 
-A full-stack journaling app built with **React**, **Express**, and **MongoDB**. Users can create, view, edit, and delete journal entries in an aesthetic dark mode environment.
+A full-stack journaling app built with the **MERN stack** and styled in Tailwind CSS. Designed for dark-mode journaling with clean CRUD functionality and MongoDB-powered persistence.
 
 ## ✨ Features
 
@@ -58,9 +58,8 @@ npm install
 npm run dev
 ```
 
-## 📸 Screenshots
-
---> WIP
+## 📸 User Interface preview
+![image](https://github.com/user-attachments/assets/65f3e61c-319d-4057-8c67-c15413dcc918)
 
 ## 🚀 Future Improvements
 
