@@ -82,10 +82,10 @@ Some information as to the internal workings of the project.
 
 | Method | Route              | Description                    |
 | ------ | ------------------ | ------------------------------ |
-| GET    | `/api/entries`     | Get all journal entries        |
-| POST   | `/api/entries`     | Add a new journal entry        |
-| PUT    | `/api/entries/:id` | Update a journal entry by `id` |
-| DELETE | `/api/entries/:id` | Delete a journal entry by `id` |
+| GET    | `/api/journal`     | Get all journal entries        |
+| POST   | `/api/journal`     | Add a new journal entry        |
+| PUT    | `/api/journal/:id` | Update a journal entry by `id` |
+| DELETE | `/api/journal/:id` | Delete a journal entry by `id` |
 
 ## 📁 Project Structure
 
