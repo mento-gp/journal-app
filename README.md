@@ -4,10 +4,11 @@ A full-stack journaling app built with the **MERN stack** and styled in Tailwind
 
 ## ✨ Features
 
--   Add, edit, and delete journal entries
--   MongoDB-powered persistence using Mongoose
--   Auto-generated timestamps with formatting
--   Responsive dark UI built with Tailwind CSS
+-   Add, edit, and delete journal entries  
+-   MongoDB-powered persistence using Mongoose  
+-   Auto-generated timestamps with formatting  
+-   Filter entries by tag using a dynamic, clickable tag system  
+-   Responsive dark UI built with Tailwind CSS  
 -   Full CRUD functionality via REST API
 
 ---
@@ -64,7 +65,6 @@ npm run dev
 ## 🚀 Future Improvements
 
 -   JWT-based authentication (login/signup)
--   Entry tags and filters
 -   Markdown or rich text editor
 -   Cloud deployment (MongoDB Atlas + Render/Vercel)
 
