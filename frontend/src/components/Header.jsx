@@ -10,17 +10,14 @@ function Header() {
                 </div>
             </nav>
             <section className="relative w-screen max-w-none h-[400px] overflow-hidden">
-                {/* Nebula image */}
                 <img
                     src="/img/carina.webp"
                     alt="Carina Nebula"
                     className="absolute inset-0 w-full h-full object-cover z-0"
                 />
 
-                {/* Bottom gradient fade */}
                 <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-b from-transparent to-bg-primary z-10"></div>
 
-                {/* Hero text */}
                 <div className="relative z-20 h-full flex flex-col items-center justify-center text-center">
                     <h1 className="text-4xl text-text-primary font-bold">
                         Welcome Back

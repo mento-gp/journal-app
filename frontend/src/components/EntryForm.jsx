@@ -7,6 +7,8 @@ function EntryForm({
     initialTags = "",
     editStatus = false,
     onCancel,
+    forceOpen = false,
+    modal = false,
 }) {
     const [isOpen, setIsOpen] = useState(false);
     const [title, setTitle] = useState(initialTitle);
@@ -48,7 +50,7 @@ function EntryForm({
 
     return (
         <div>
-            {!isOpen && !editStatus ? (
+            {!isOpen && !editStatus && !forceOpen ? (
                 <div
                     onClick={() => setIsOpen(true)}
                     className="bg-bg-card w-64 h-64 border-4 rounded-4xl border-accent-indigo flex items-center justify-center text-text-secondary text-sm cursor-pointer hover:border-accent-indigo-light hover:scale-105 active:scale-95 transition-transform duration-250
@@ -57,7 +59,11 @@ function EntryForm({
                     <span className="text-lg">➕ Add Entry</span>
                 </div>
             ) : (
-                <div className="rounded-4xl border-2 border-neutral-700 bg-bg-card p-4 w-64 h-64 text-text-primary">
+                <div
+                    className={`mt-5 rounded-4xl border-2 border-neutral-700 bg-bg-card p-4 w-64 h-64 text-text-primary ${
+                        modal ? "w-full h-auto" : ""
+                    }`}
+                >
                     <form
                         className="min-h-full flex flex-col justify-between"
                         onSubmit={handleSubmit}

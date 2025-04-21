@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from "react";
 import EntryForm from "./EntryForm";
+import EntryOverlay from "./EntryOverlay";
 
-function EntryList({ entries = [], selectedTag, onTagsUpdate, refresh }) {
+function EntryList({
+    entries = [],
+    selectedTag,
+    onTagsUpdate,
+    handleSave,
+    openEntry,
+    setOpenEntry,
+    refresh,
+}) {
     const [editingId, setEditingId] = useState();
 
     useEffect(() => {
@@ -20,17 +29,6 @@ function EntryList({ entries = [], selectedTag, onTagsUpdate, refresh }) {
         } catch (error) {
             console.log("Error deleting entry");
         }
-    }
-
-    async function handleSave(id, { title, body, tags }) {
-        await fetch(`http://localhost:8000/api/journal/${id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ title, body, tags }),
-        });
-
-        setEditingId(null); // Exit edit mode
-        refresh(); // Refresh the list
     }
 
     const allTags = entries.flatMap((entry) => entry.tags);
@@ -52,9 +50,13 @@ function EntryList({ entries = [], selectedTag, onTagsUpdate, refresh }) {
                         <EntryForm
                             initialTitle={entry.title}
                             initialBody={entry.body}
+                            initialTags={entry.tags.join(", ")}
                             editStatus={true}
                             onCancel={() => setEditingId(null)}
-                            onSubmit={(data) => handleSave(entry.id, data)}
+                            onSubmit={(data) => {
+                                handleSave(entry.id, data);
+                                setEditingId(null);
+                            }}
                         />
                     ) : (
                         <div
@@ -71,24 +73,25 @@ function EntryList({ entries = [], selectedTag, onTagsUpdate, refresh }) {
                                         ))}
                                     </div>
                                 )}
-                                <h3 className="mt-2 text-base font-semibold">
-                                    {entry.title}
-                                </h3>
-                                <p className="text-sm text-text-secondary mt-1 line-clamp-3">
-                                    {entry.body}
-                                </p>
-                                <p className="text-xs text-text-secondary mt-2 italic">
-                                    {new Date(entry.createdAt).toLocaleString(
-                                        "en-US",
-                                        {
+                                <div onClick={() => setOpenEntry(entry)}>
+                                    <h3 className="mt-2 text-base font-semibold">
+                                        {entry.title}
+                                    </h3>
+                                    <p className="text-sm text-text-secondary mt-1 line-clamp-3">
+                                        {entry.body}
+                                    </p>
+                                    <p className="text-xs text-text-secondary mt-2 italic">
+                                        {new Date(
+                                            entry.createdAt
+                                        ).toLocaleString("en-US", {
                                             year: "numeric",
                                             month: "long",
                                             day: "numeric",
                                             hour: "numeric",
                                             minute: "2-digit",
-                                        }
-                                    )}
-                                </p>
+                                        })}
+                                    </p>
+                                </div>
                             </div>
 
                             <div className="flex justify-end gap-2 mt-4">
@@ -108,6 +111,13 @@ function EntryList({ entries = [], selectedTag, onTagsUpdate, refresh }) {
                         </div>
                     )
                 )}
+            {openEntry && (
+                <EntryOverlay
+                    entry={openEntry}
+                    onClose={() => setOpenEntry(null)}
+                    handleSave={handleSave}
+                />
+            )}
         </>
     );
 }

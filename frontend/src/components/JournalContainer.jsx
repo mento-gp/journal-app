@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import EntryForm from "./EntryForm";
 import EntryList from "./EntryList";
+import TagFilterBar from "./TagFilterBar";
 
 export default function JournalContainer() {
     const [entries, setEntries] = useState([]);
+    const [openEntry, setOpenEntry] = useState(null);
     const [selectedTag, setSelectedTag] = useState(null);
     const [allTags, setAllTags] = useState([]);
 
@@ -34,36 +36,49 @@ export default function JournalContainer() {
         await fetchData();
     }
 
+    async function handleSave(id, { title, body, tags }) {
+        const updatedEntry = { title, body, tags };
+
+        try {
+            const res = await fetch(`http://localhost:8000/api/journal/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(updatedEntry),
+            });
+
+            if (!res.ok) {
+                throw new Error("Failed to update entry");
+            }
+
+            setEntries((prevEntries) =>
+                prevEntries.map((entry) =>
+                    entry.id === id ? { ...entry, ...updatedEntry } : entry
+                )
+            );
+
+            setOpenEntry((prev) =>
+                prev && prev.id === id ? { ...prev, ...updatedEntry } : prev
+            );
+        } catch (error) {
+            console.error("Error updating entry:", error);
+        }
+    }
+
     return (
         <div className="flex flex-col items-center justify-center bg-bg-primary mt-6">
-            <div className="max-w-[528px] md:max-w-[800px] flex flex-wrap gap-2 mb-4">
-                {allTags.map((tag) => (
-                    <button
-                        key={tag}
-                        onClick={() => setSelectedTag(tag)}
-                        className={`px-3 py-1 rounded-full text-sm border ${
-                            selectedTag === tag
-                                ? "bg-accent-indigo text-white"
-                                : "bg-neutral-800 text-text-secondary"
-                        } hover:bg-accent-indigo-light transition`}
-                    >
-                        #{tag}
-                    </button>
-                ))}
-                {selectedTag && (
-                    <button
-                        onClick={() => setSelectedTag(null)}
-                        className="px-3 py-1 rounded-full text-sm bg-neutral-700 text-text-secondary border hover:bg-neutral-600 transition"
-                    >
-                        ✕ Clear Filter
-                    </button>
-                )}
-            </div>
+            <TagFilterBar
+                allTags={allTags}
+                selectedTag={selectedTag}
+                setSelectedTag={setSelectedTag}
+            />
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 bg-bg-primary">
                 <EntryList
                     entries={entries}
                     selectedTag={selectedTag}
                     onTagsUpdate={setAllTags}
+                    handleSave={handleSave}
+                    openEntry={openEntry}
+                    setOpenEntry={setOpenEntry}
                     refresh={fetchData}
                 />
                 <EntryForm
