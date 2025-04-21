@@ -36,7 +36,7 @@ export default function JournalContainer() {
 
     return (
         <div className="flex flex-col items-center justify-center bg-bg-primary mt-6">
-            <div className="flex flex-wrap gap-2 mb-4">
+            <div className="max-w-[528px] md:max-w-[800px] flex flex-wrap gap-2 mb-4">
                 {allTags.map((tag) => (
                     <button
                         key={tag}
