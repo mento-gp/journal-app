@@ -11,6 +11,7 @@ export async function createEntry(req, res) {
         id: count + 1,
         title: req.body.title,
         body: req.body.body,
+        tags: req.body.tags,
         createdAt: new Date().toISOString(),
     });
     res.status(201).json(entry);
@@ -23,6 +24,7 @@ export async function updateEntry(req, res) {
         {
             title: req.body.title,
             body: req.body.body,
+            tags: req.body.tags,
         },
         { new: true }
     );

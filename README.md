@@ -80,6 +80,8 @@ Some information as to the internal workings of the project.
 
 ## 🔌 API Endpoints
 
+`id` is custom identifer for entries
+
 | Method | Route              | Description                    |
 | ------ | ------------------ | ------------------------------ |
 | GET    | `/api/journal`     | Get all journal entries        |

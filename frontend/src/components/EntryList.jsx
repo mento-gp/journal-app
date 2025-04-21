@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import EntryForm from "./EntryForm";
 
-function EntryList({ entries = [], refresh }) {
+function EntryList({ entries = [], selectedTag, onTagsUpdate, refresh }) {
     const [editingId, setEditingId] = useState();
 
     useEffect(() => {
@@ -22,21 +22,32 @@ function EntryList({ entries = [], refresh }) {
         }
     }
 
-    async function handleSave(id, { title, body }) {
+    async function handleSave(id, { title, body, tags }) {
         await fetch(`http://localhost:8000/api/journal/${id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ title, body }),
+            body: JSON.stringify({ title, body, tags }),
         });
 
         setEditingId(null); // Exit edit mode
         refresh(); // Refresh the list
     }
 
+    const allTags = entries.flatMap((entry) => entry.tags);
+    const uniqueTags = [...new Set(allTags)];
+
+    useEffect(() => {
+        onTagsUpdate(uniqueTags);
+    }, [entries]);
+
+    const filteredEntries = selectedTag
+        ? entries.filter((entry) => entry.tags.includes(selectedTag))
+        : entries;
+
     return (
         <>
-            {entries &&
-                entries.map((entry) =>
+            {filteredEntries &&
+                filteredEntries.map((entry) =>
                     entry.id === editingId ? (
                         <EntryForm
                             initialTitle={entry.title}
@@ -48,10 +59,19 @@ function EntryList({ entries = [], refresh }) {
                     ) : (
                         <div
                             key={entry.id}
-                            className="cursor-pointer flex flex-col justify-between rounded-4xl border-2 border-neutral-700 bg-bg-card p-4 w-64 h-64 text-text-primary hover:bg-bg-card-secondary transition-colors"
+                            className="cursor-pointer flex flex-col justify-between rounded-4xl border-2 border-neutral-700 bg-bg-card p-4 w-64 h-64 text-text-primary"
                         >
                             <div>
-                                <h3 className="text-base font-semibold">
+                                {entry.tags.length > 0 && (
+                                    <div className="flex flex-wrap gap-2 max-w-full break-words overflow-hidden">
+                                        {entry.tags.map((tag) => (
+                                            <span className="px-2 py-1 bg-accent-indigo-light text-xs rounded-full mr-1 hover:bg-accent-indigo transition-colors whitespace-nowrap">
+                                                {tag}
+                                            </span>
+                                        ))}
+                                    </div>
+                                )}
+                                <h3 className="mt-2 text-base font-semibold">
                                     {entry.title}
                                 </h3>
                                 <p className="text-sm text-text-secondary mt-1 line-clamp-3">

@@ -4,24 +4,36 @@ function EntryForm({
     onSubmit,
     initialTitle = "",
     initialBody = "",
+    initialTags = "",
     editStatus = false,
     onCancel,
 }) {
     const [isOpen, setIsOpen] = useState(false);
     const [title, setTitle] = useState(initialTitle);
     const [body, setBody] = useState(initialBody);
+    const [tags, setTags] = useState(initialTags);
+
+    let parsedTags = tags
+        .split(",")
+        .map((t) => t.trim())
+        .filter((t) => t !== "");
+
+    if (parsedTags.length === 0) {
+        parsedTags = [];
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         if (!title.trim() || !body.trim()) return;
 
-        onSubmit({ title, body });
+        onSubmit({ title, body, tags: parsedTags });
 
         // Reset state after creating (only for Add mode)
         if (!editStatus) {
             setTitle("");
             setBody("");
+            setTags("");
             setIsOpen(false);
         }
     };
@@ -65,6 +77,16 @@ function EntryForm({
                             placeholder="Enter text"
                             id="body"
                         ></textarea>
+
+                        <input
+                            className="w-full bg-transparent text-text-primary placeholder-text-secondary text-base font-inherit outline-none font-semibold"
+                            type="text"
+                            value={tags}
+                            placeholder="Enter comma-separated tags"
+                            onChange={(e) => setTags(e.target.value)}
+                            autoComplete="off"
+                            id="tags"
+                        />
 
                         <div className="flex justify-end gap-2 mt-2">
                             <button
