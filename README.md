@@ -60,7 +60,9 @@ npm run dev
 ```
 
 ## 📸 User Interface preview
-![image](https://github.com/user-attachments/assets/65f3e61c-319d-4057-8c67-c15413dcc918)
+![image](https://github.com/user-attachments/assets/b5347cc4-24f0-4d93-ba3e-d044d57c3917)
+![image](https://github.com/user-attachments/assets/83c72ef4-4b09-45f6-be14-7e0a688aac85)
+
 
 ## 🚀 Future Improvements
 
