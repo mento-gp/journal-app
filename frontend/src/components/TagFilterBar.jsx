@@ -2,7 +2,7 @@ function TagFilterBar({ allTags, selectedTag, setSelectedTag }) {
     if (!allTags || allTags.length === 0) return null;
 
     return (
-        <div className="max-w-[528px] md:max-w-[800px] flex flex-wrap gap-2 mb-4">
+        <div className="max-w-[528px] md:max-w-[800px] flex flex-wrap gap-2 mb-7">
             {allTags.map((tag) => (
                 <button
                     key={tag}

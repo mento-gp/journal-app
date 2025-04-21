@@ -12,7 +12,6 @@ export async function createEntry(req, res) {
         title: req.body.title,
         body: req.body.body,
         tags: req.body.tags,
-        createdAt: new Date().toISOString(),
     });
     res.status(201).json(entry);
 }

@@ -67,7 +67,10 @@ function EntryList({
                                 {entry.tags.length > 0 && (
                                     <div className="flex flex-wrap gap-2 max-w-full break-words overflow-hidden">
                                         {entry.tags.map((tag) => (
-                                            <span className="px-2 py-1 bg-accent-indigo-light text-xs rounded-full mr-1 hover:bg-accent-indigo transition-colors whitespace-nowrap">
+                                            <span
+                                                key={tag}
+                                                className="px-2 py-1 bg-accent-indigo-light text-xs rounded-full mr-1 hover:bg-accent-indigo transition-colors whitespace-nowrap"
+                                            >
                                                 {tag}
                                             </span>
                                         ))}

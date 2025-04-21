@@ -31,7 +31,6 @@ function EntryForm({
 
         onSubmit({ title, body, tags: parsedTags });
 
-        // Reset state after creating (only for Add mode)
         if (!editStatus) {
             setTitle("");
             setBody("");
@@ -41,11 +40,8 @@ function EntryForm({
     };
 
     const handleCancel = () => {
-        if (editStatus && onCancel) {
-            onCancel(); // exit edit mode
-        } else {
-            setIsOpen(false); // collapse "Add Entry"
-        }
+        setIsOpen(false);
+        onCancel();
     };
 
     return (
@@ -60,7 +56,7 @@ function EntryForm({
                 </div>
             ) : (
                 <div
-                    className={`mt-5 rounded-4xl border-2 border-neutral-700 bg-bg-card p-4 w-64 h-64 text-text-primary ${
+                    className={`rounded-4xl border-2 border-neutral-700 p-4 bg-bg-card w-64 h-64 text-text-primary ${
                         modal ? "w-full h-auto" : ""
                     }`}
                 >
@@ -80,6 +76,40 @@ function EntryForm({
                             className="rounded flex-1 bg-transparent text-text-secondary text-sm placeholder-text-secondary resize-none focus:outline-none mt-1 font-inherit"
                             value={body}
                             onChange={(e) => setBody(e.target.value)}
+                            onKeyDown={async (e) => {
+                                if (e.key === "Enter") {
+                                    const cursorIndex = e.target.selectionStart;
+                                    const before = body.slice(0, cursorIndex);
+                                    const match = /\/ai\s*$/;
+
+                                    if (match.test(before)) {
+                                        e.preventDefault();
+
+                                        // 💬 Call backend
+                                        const res = await fetch(
+                                            "http://localhost:8000/api/ai/summarize",
+                                            {
+                                                method: "POST",
+                                                headers: {
+                                                    "Content-Type":
+                                                        "application/json",
+                                                },
+                                                body: JSON.stringify({ body }),
+                                            }
+                                        );
+
+                                        const data = await res.json();
+                                        const summary = data.summary;
+
+                                        // 📝 Replace /ai with summary
+                                        const updatedBody =
+                                            before.replace(match, summary) +
+                                            body.slice(cursorIndex);
+
+                                        setBody(updatedBody);
+                                    }
+                                }
+                            }}
                             placeholder="Enter text"
                             id="body"
                         ></textarea>

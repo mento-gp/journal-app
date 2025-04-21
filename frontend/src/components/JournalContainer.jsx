@@ -37,27 +37,27 @@ export default function JournalContainer() {
     }
 
     async function handleSave(id, { title, body, tags }) {
-        const updatedEntry = { title, body, tags };
-
         try {
             const res = await fetch(`http://localhost:8000/api/journal/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(updatedEntry),
+                body: JSON.stringify({ title, body, tags }),
             });
 
             if (!res.ok) {
                 throw new Error("Failed to update entry");
             }
 
+            const updatedEntry = await res.json();
+
             setEntries((prevEntries) =>
                 prevEntries.map((entry) =>
-                    entry.id === id ? { ...entry, ...updatedEntry } : entry
+                    entry.id === id ? updatedEntry : entry
                 )
             );
 
             setOpenEntry((prev) =>
-                prev && prev.id === id ? { ...prev, ...updatedEntry } : prev
+                prev && prev.id === id ? updatedEntry : prev
             );
         } catch (error) {
             console.error("Error updating entry:", error);
