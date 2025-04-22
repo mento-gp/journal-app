@@ -7,6 +7,7 @@ function EntryList({
     selectedTag,
     onTagsUpdate,
     handleSave,
+    handleDelete,
     openEntry,
     setOpenEntry,
     refresh,
@@ -16,20 +17,6 @@ function EntryList({
     useEffect(() => {
         refresh();
     }, []);
-
-    async function handleDelete(id) {
-        try {
-            const res = await fetch(`http://localhost:8000/api/journal/${id}`, {
-                method: "DELETE",
-            });
-            if (!res.ok) {
-                throw new Error("Fetch failed");
-            }
-            refresh();
-        } catch (error) {
-            console.log("Error deleting entry");
-        }
-    }
 
     const allTags = entries.flatMap((entry) => entry.tags);
     const uniqueTags = [...new Set(allTags)];

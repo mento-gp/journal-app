@@ -6,8 +6,8 @@ import TagFilterBar from "./TagFilterBar";
 export default function JournalContainer() {
     const [entries, setEntries] = useState([]);
     const [openEntry, setOpenEntry] = useState(null);
-    const [selectedTag, setSelectedTag] = useState(null);
     const [allTags, setAllTags] = useState([]);
+    const [selectedTag, setSelectedTag] = useState(null);
 
     async function fetchData() {
         try {
@@ -64,6 +64,20 @@ export default function JournalContainer() {
         }
     }
 
+    async function handleDelete(id) {
+        try {
+            const res = await fetch(`http://localhost:8000/api/journal/${id}`, {
+                method: "DELETE",
+            });
+            if (!res.ok) {
+                throw new Error("Fetch failed");
+            }
+            await fetchData();
+        } catch (error) {
+            console.log("Error deleting entry");
+        }
+    }
+
     return (
         <div className="flex flex-col items-center justify-center bg-bg-primary mt-6">
             <TagFilterBar
@@ -77,15 +91,12 @@ export default function JournalContainer() {
                     selectedTag={selectedTag}
                     onTagsUpdate={setAllTags}
                     handleSave={handleSave}
+                    handleDelete={handleDelete}
                     openEntry={openEntry}
                     setOpenEntry={setOpenEntry}
                     refresh={fetchData}
                 />
-                <EntryForm
-                    initialTitle=""
-                    initialBody=""
-                    onSubmit={handleCreate}
-                />
+                <EntryForm onSubmit={handleCreate} />
             </div>
         </div>
     );
