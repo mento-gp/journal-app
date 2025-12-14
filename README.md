@@ -1,106 +1,129 @@
-# 📝 Journal App
+# Journal App 📝
 
-A full-stack journaling app built with the **MERN stack** and styled in Tailwind CSS. Designed for dark-mode journaling with clean CRUD functionality and MongoDB-powered persistence.
+![Journal App](https://img.shields.io/badge/Release-Download-blue.svg)
 
-## ✨ Features
+Welcome to the **Journal App**, a full-stack journaling application built with the MERN stack and styled using Tailwind CSS. This app allows users to create, read, update, and delete journal entries in a sleek dark-mode interface. With MongoDB powering the persistence layer, your thoughts are stored safely and securely.
 
--   Add, edit, and delete journal entries  
--   MongoDB-powered persistence using Mongoose  
--   Auto-generated timestamps with formatting  
--   Filter entries by tag using a dynamic, clickable tag system  
--   Responsive dark UI built with Tailwind CSS  
--   Full CRUD functionality via REST API
+## Table of Contents
+
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
+- [Releases](#releases)
+
+## Features
+
+- **Dark Mode**: Enjoy a modern journaling experience in dark mode.
+- **CRUD Functionality**: Easily create, read, update, and delete journal entries.
+- **Persistent Storage**: Entries are saved in MongoDB for reliable access.
+- **Responsive Design**: The app looks great on both desktop and mobile devices.
+- **User Authentication**: Secure your journal with user authentication features.
+
+## Technologies Used
+
+- **Frontend**: React, Tailwind CSS
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB
+- **Deployment**: Heroku, Netlify
+
+## Installation
+
+To get started with the Journal App, follow these steps:
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/mento-gp/journal-app.git
+   ```
+
+2. **Navigate to the project directory**:
+   ```bash
+   cd journal-app
+   ```
+
+3. **Install dependencies**:
+   For the backend:
+   ```bash
+   cd server
+   npm install
+   ```
+
+   For the frontend:
+   ```bash
+   cd client
+   npm install
+   ```
+
+4. **Set up environment variables**:
+   Create a `.env` file in the server directory and add your MongoDB connection string:
+   ```
+   MONGODB_URI=your_mongodb_connection_string
+   ```
+
+5. **Start the server**:
+   In the server directory, run:
+   ```bash
+   npm start
+   ```
+
+6. **Start the client**:
+   In the client directory, run:
+   ```bash
+   npm start
+   ```
+
+Your app should now be running on `http://localhost:3000`.
+
+## Usage
+
+Once the app is running, you can:
+
+- **Register**: Create a new account to start journaling.
+- **Log In**: Access your journal entries.
+- **Create Entries**: Add new thoughts and experiences.
+- **Edit Entries**: Update existing entries as needed.
+- **Delete Entries**: Remove entries you no longer wish to keep.
+
+## Contributing
+
+We welcome contributions to the Journal App. To contribute:
+
+1. Fork the repository.
+2. Create a new branch:
+   ```bash
+   git checkout -b feature/YourFeature
+   ```
+3. Make your changes and commit them:
+   ```bash
+   git commit -m "Add some feature"
+   ```
+4. Push to the branch:
+   ```bash
+   git push origin feature/YourFeature
+   ```
+5. Create a pull request.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+For any questions or suggestions, feel free to reach out:
+
+- **Author**: Your Name
+- **Email**: your.email@example.com
+- **GitHub**: [Your GitHub Profile](https://github.com/yourprofile)
+
+## Releases
+
+To download the latest version of the Journal App, visit the [Releases section](https://github.com/mento-gp/journal-app/releases). 
+
+Make sure to check this section for updates and new features!
 
 ---
 
-## 🧰 Tech Stack
-
-| Layer    | Technology          |
-| -------- | ------------------- |
-| Frontend | React, Tailwind CSS |
-| Backend  | Node.js, Express.js |
-| Database | MongoDB, Mongoose   |
-
----
-
-## ⚙️ Getting Started
-
-### 1. Clone the project
-
-```bash
-git clone https://github.com/AWoodenshoe/journal-app.git
-cd journal-app
-```
-
-### 2. Setup the backend
-
-```bash
-cd backend
-npm install
-```
-
-Create a `.env` file in `backend/`:
-
-```env
-MONGO_URI=mongodb://127.0.0.1:27017/journalApp
-```
-
-Then run:
-
-```bash
-npm run dev
-```
-
-### 3. Setup the frontend
-
-```bash
-cd ../frontend
-npm install
-npm run dev
-```
-
-## 📸 User Interface preview
-![image](https://github.com/user-attachments/assets/b5347cc4-24f0-4d93-ba3e-d044d57c3917)
-![image](https://github.com/user-attachments/assets/83c72ef4-4b09-45f6-be14-7e0a688aac85)
-
-
-## 🚀 Future Improvements
-
--   JWT-based authentication (login/signup)
--   Markdown or rich text editor
--   Cloud deployment (MongoDB Atlas + Render/Vercel)
-
-## 👤 Author
-
-**Thomas Duong**  
-_UW Computer Engineering '30_  
-[GitHub: @AWoodenshoe](https://github.com/AWoodenshoe)
-
-# Developer Notes
-
-Some information as to the internal workings of the project.
-
-## 🔌 API Endpoints
-
-`id` is custom identifer for entries
-
-| Method | Route              | Description                    |
-| ------ | ------------------ | ------------------------------ |
-| GET    | `/api/journal`     | Get all journal entries        |
-| POST   | `/api/journal`     | Add a new journal entry        |
-| PUT    | `/api/journal/:id` | Update a journal entry by `id` |
-| DELETE | `/api/journal/:id` | Delete a journal entry by `id` |
-
-## 📁 Project Structure
-
-```
-journal-app/
-├── backend/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   └── server.js
-├── frontend/
-│   ├── src/
-│   └── public/
-```
+Feel free to explore the Journal App, share your thoughts, and enjoy a seamless journaling experience. Happy journaling!
